@@ -5,12 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnvilScreenHandlerMixin",
-    "HorseArmorItemMixin",
     "EnchantmentHelperMixin",
-    "HorseArmorFeatureRendererMixin"
+    "HorseArmorItemMixin",
+    "LivingEntityMixin"
   ],
   "client": [
-
+    "HorseArmorFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

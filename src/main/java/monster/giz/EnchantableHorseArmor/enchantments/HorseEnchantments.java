@@ -2,13 +2,13 @@ package monster.giz.EnchantableHorseArmor.enchantments;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import monster.giz.EnchantableHorseArmor.EnchantableHorseArmor;
-import monster.giz.EnchantableHorseArmor.enchantments.horse_armor.HippocampusEnchantment;
+import monster.giz.EnchantableHorseArmor.util.EHALogger;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.HorseEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,12 +40,14 @@ public class HorseEnchantments {
         horseEnchantmentsSet = new HashSet<Enchantment>();
     }
     public static void initialize() {
+        /*
         AQUA_EQUINE = Registry.register(
-                Registry.ENCHANTMENT,
+                Registries.ENCHANTMENT,
                 new Identifier(EnchantableHorseArmor.NAMESPACE, "aqua_equine"),
                 new HippocampusEnchantment()
         );
-        horseEnchantments.add(AQUA_EQUINE);
+        horseEnchantments.add(AQUA_EQUINE);\
+         */
 
         horseEnchantmentsSet = Sets.newHashSet(horseEnchantments);
     }
@@ -78,6 +80,23 @@ public class HorseEnchantments {
                 }
             }
         }
+    }
+
+    public static boolean hasHorseSwim(LivingEntity entity) {
+        if (entity instanceof HorseEntity) {
+            HorseEntity horse = ((HorseEntity) entity);
+            if (!horse.hasArmorSlot()) {
+                return false;
+            }
+            int i = EnchantmentHelper.getLevel(AQUA_EQUINE, horse.getArmorType());
+            if (i > 0) {
+                EHALogger.log("Has horse swim enchantment! SWIM HORSEY, SWIM!");
+                return true;
+            } else {
+                EHALogger.log("No dice");
+            }
+        }
+        return false;
     }
 
 }
