@@ -2,8 +2,6 @@ package monster.giz.EnchantableHorseArmor.enchantments;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import monster.giz.EnchantableHorseArmor.EnchantableHorseArmor;
-import monster.giz.EnchantableHorseArmor.enchantments.horse_armor.HippocampusEnchantment;
 import monster.giz.EnchantableHorseArmor.util.EHALogger;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,11 +9,6 @@ import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,13 +39,16 @@ public class HorseEnchantments {
 
         horseEnchantmentsSet = new HashSet<Enchantment>();
     }
+    //TODO: better implement custom horse armor enchantments because this sucks ASS
     public static void initialize() {
-        AQUA_EQUINE = net.minecraft.registry.Registry.register(
+        /*
+        AQUA_EQUINE = Registry.register(
                 Registries.ENCHANTMENT,
                 new Identifier(EnchantableHorseArmor.NAMESPACE, "aqua_equine"),
                 new HippocampusEnchantment()
         );
-        horseEnchantments.add(AQUA_EQUINE);
+        horseEnchantments.add(AQUA_EQUINE);\
+         */
 
         horseEnchantmentsSet = Sets.newHashSet(horseEnchantments);
     }

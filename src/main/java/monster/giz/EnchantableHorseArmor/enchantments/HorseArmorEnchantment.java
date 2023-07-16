@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 
 public class HorseArmorEnchantment extends Enchantment {
 
+    //horse type requirement?
+
     protected HorseArmorEnchantment(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
         super(weight, type, slotTypes);
     }
@@ -19,7 +21,7 @@ public class HorseArmorEnchantment extends Enchantment {
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        return stack.getRegistryEntry().isIn(EnchantableHorseArmor.HORSE_ARMOR);
+        return EnchantableHorseArmor.isHorseArmor(stack);
     }
 
 }

@@ -39,6 +39,7 @@ public class HorseEnchantments {
 
         horseEnchantmentsSet = new HashSet<Enchantment>();
     }
+    //TODO: better implement custom horse armor enchantments because this sucks ASS
     public static void initialize() {
         /*
         AQUA_EQUINE = Registry.register(

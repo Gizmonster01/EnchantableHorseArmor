@@ -23,8 +23,8 @@ public class EnchantmentHelperMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
-        if (stack.isIn(EnchantableHorseArmor.HORSE_ARMOR) && !stack.isOf(Items.BOOK)) {
+    private static void enchantablehorsearmor$getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
+        if (EnchantableHorseArmor.isHorseArmor(stack) && !stack.isOf(Items.BOOK)) {
             cir.setReturnValue(HorseEnchantments.getPossibleHorseEntries(power, treasureAllowed));
         }
     }
@@ -34,7 +34,7 @@ public class EnchantmentHelperMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void getEquipmentLevel(Enchantment enchantment, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
+    private static void enchantablehorsearmor$getEquipmentLevel(Enchantment enchantment, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
         if (entity instanceof HorseEntity) {
             HorseEntity horse = ((HorseEntity) entity);
             int i = EnchantmentHelper.getLevel(enchantment, horse.getArmorType());

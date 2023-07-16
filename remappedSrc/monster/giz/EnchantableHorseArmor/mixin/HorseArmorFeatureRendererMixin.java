@@ -35,7 +35,6 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
      * @author gizmonster
      * @reason Simply adds enchantment glint support for horse armor.
      */
-
     @Overwrite
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l) {
         ItemStack itemStack = horseEntity.getArmorType();
@@ -45,7 +44,7 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
             if (itemStack.hasGlint()) {
                 glint = true;
             }
-            ((HorseEntityModel)this.getContextModel()).copyStateTo(this.model);
+            this.getContextModel().copyStateTo(this.model);
             this.model.animateModel(horseEntity, f, g, h);
             this.model.setAngles(horseEntity, f, g, j, k, l);
             float n;
@@ -61,7 +60,6 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
                 o = 1.0F;
                 p = 1.0F;
             }
-            //VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(horseArmorItem.getEntityTexture()));
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(horseArmorItem.getEntityTexture()), false, glint);
             this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, n, o, p, 1.0F);
         }

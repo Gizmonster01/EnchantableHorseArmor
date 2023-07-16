@@ -6,8 +6,7 @@
   "mixins": [
     "AnvilScreenHandlerMixin",
     "EnchantmentHelperMixin",
-    "HorseArmorItemMixin",
-    "LivingEntityMixin"
+    "HorseArmorItemMixin"
   ],
   "client": [
     "HorseArmorFeatureRendererMixin"

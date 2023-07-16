@@ -3,8 +3,8 @@
   "id": "enchantablehorsearmor",
   "version": "${version}",
 
-  "name": "Gizmos Additions",
-  "description": "An eclectic mix of additions, tweaks, and mechanics that I would personally like to see in the base game",
+  "name": "Enchantable Horse Armor",
+  "description": "A mod that brings full enchantment support to horse armor",
   "authors": [
     "gizmonster"
   ],
@@ -30,9 +30,9 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.6",
+    "fabricloader": ">=0.14.21",
     "fabric": "*",
-    "minecraft": "~1.19",
+    "minecraft": ">=1.20",
     "java": ">=17"
   },
   "suggests": {

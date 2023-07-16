@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -182,7 +181,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
     public void updateResult(CallbackInfo ci) {
         ItemStack item = this.input.getStack(0);
         ItemStack ingredient = this.input.getStack(1);
-        if (item.isIn(EnchantableHorseArmor.HORSE_ARMOR)) {
+        if (EnchantableHorseArmor.isHorseArmor(item)) {
             horseArmorHandler(item, ingredient);
             ci.cancel();
         }
