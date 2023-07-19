@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import static net.minecraft.screen.AnvilScreenHandler.getNextCost;
@@ -39,118 +38,104 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
         super(type, syncId, playerInventory, context);
     }
 
-    public void horseArmorHandler(ItemStack item, ItemStack ingredient) {
+    public void horseArmorAnvilHandler(ItemStack item, ItemStack ingredient) {
         this.levelCost.set(1);
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int totalCost = 0;
+        int enchantabilitySum = 0;
+
         if (item.isEmpty()) {
             this.output.setStack(0, ItemStack.EMPTY);
             this.levelCost.set(0);
-        } else {
-            ItemStack resultStack = item.copy();
-            Map<Enchantment, Integer> map = EnchantmentHelper.get(resultStack);
-            j += item.getRepairCost() + (ingredient.isEmpty() ? 0 : ingredient.getRepairCost());
-            this.repairItemUsage = 0;
-            if (!ingredient.isEmpty()) {
-                boolean book = ingredient.isOf(Items.ENCHANTED_BOOK) && !EnchantedBookItem.getEnchantmentNbt(ingredient).isEmpty();
-                if (!book && (!resultStack.isOf(ingredient.getItem()))) {
-                    this.output.setStack(0, ItemStack.EMPTY);
-                    this.levelCost.set(0);
-                    return;
+            return;
+        }
+
+        ItemStack resultStack = item.copy();
+        Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.get(resultStack);
+        int itemRepairCost = item.getRepairCost();
+        int ingredientRepairCost = ingredient.isEmpty() ? 0 : ingredient.getRepairCost();
+        totalCost += itemRepairCost + ingredientRepairCost;
+        this.repairItemUsage = 0;
+
+        if (!ingredient.isEmpty()) {
+            boolean isBook = ingredient.isOf(Items.ENCHANTED_BOOK) && !EnchantedBookItem.getEnchantmentNbt(ingredient).isEmpty();
+
+            if (!isBook && (!resultStack.isOf(ingredient.getItem()))) {
+                this.output.setStack(0, ItemStack.EMPTY);
+                this.levelCost.set(0);
+                return;
+            }
+
+            Map<Enchantment, Integer> ingredientEnchantments = EnchantmentHelper.get(ingredient);
+
+            for (Enchantment enchantment : ingredientEnchantments.keySet()) {
+                if (enchantment == null) {
+                    continue;
                 }
-                Map<Enchantment, Integer> ingredientEnchants = EnchantmentHelper.get(ingredient);
-                boolean bl2 = false;
-                boolean bl3 = false;
-                Iterator var23 = ingredientEnchants.keySet().iterator();
 
-                label155:
-                while(true) {
-                    Enchantment enchantment;
-                    do {
-                        if (!var23.hasNext()) {
-                            if (bl3 && !bl2) {
-                                this.output.setStack(0, ItemStack.EMPTY);
-                                this.levelCost.set(0);
-                                return;
-                            }
-                            break label155;
-                        }
+                int existingLevel = existingEnchantments.getOrDefault(enchantment, 0);
+                int ingredientLevel = ingredientEnchantments.get(enchantment);
+                ingredientLevel = existingLevel == ingredientLevel ? ingredientLevel + 1 : Math.max(ingredientLevel, existingLevel);
 
-                        enchantment = (Enchantment)var23.next();
-                    } while(enchantment == null);
+                boolean isAcceptableEnchantment = HorseEnchantments.isAcceptableHorseEnchantment(enchantment);
 
-                    int q = (Integer)map.getOrDefault(enchantment, 0);
-                    int r = (Integer)ingredientEnchants.get(enchantment);
-                    r = q == r ? r + 1 : Math.max(r, q);
-                    boolean acceptableEnchantment = HorseEnchantments.isAcceptableHorseEnchantment(enchantment);
-                    if (this.player.getAbilities().creativeMode || item.isOf(Items.ENCHANTED_BOOK)) {
-                        acceptableEnchantment = true;
+                if (this.player.getAbilities().creativeMode || item.isOf(Items.ENCHANTED_BOOK)) {
+                    isAcceptableEnchantment = true;
+                }
+
+                for (Enchantment existingEnchantment : existingEnchantments.keySet()) {
+                    if (existingEnchantment != enchantment && !enchantment.canCombine(existingEnchantment)) {
+                        isAcceptableEnchantment = false;
+                        break;
+                    }
+                }
+
+                if (!isAcceptableEnchantment) {
+
+                    if (ingredientLevel > enchantment.getMaxLevel()) {
+                        ingredientLevel = enchantment.getMaxLevel();
                     }
 
-                    Iterator ingredIterator = map.keySet().iterator();
+                    existingEnchantments.put(enchantment, ingredientLevel);
+                    int enchantability = getEnchantabilityWeight(enchantment);
 
-                    while(ingredIterator.hasNext()) {
-                        Enchantment enchantment2 = (Enchantment)ingredIterator.next();
-                        if (enchantment2 != enchantment && !enchantment.canCombine(enchantment2)) {
-                            acceptableEnchantment = false;
-                            ++i;
-                        }
+                    switch (enchantment.getRarity()) {
+                        case COMMON -> enchantabilitySum += enchantability;
+                        case UNCOMMON -> enchantabilitySum += enchantability * 2;
+                        case RARE -> enchantabilitySum += enchantability * 4;
+                        case VERY_RARE -> enchantabilitySum += enchantability * 8;
                     }
 
-                    if (!acceptableEnchantment) {
-                        bl3 = true;
-                    } else {
-                        bl2 = true;
-                        if (r > enchantment.getMaxLevel()) {
-                            r = enchantment.getMaxLevel();
-                        }
-
-                        map.put(enchantment, r);
-                        int s = 0;
-                        switch (enchantment.getRarity()) {
-                            case COMMON:
-                                s = 1;
-                                break;
-                            case UNCOMMON:
-                                s = 2;
-                                break;
-                            case RARE:
-                                s = 4;
-                                break;
-                            case VERY_RARE:
-                                s = 8;
-                        }
-                        if (book) {
-                                s = Math.max(1, s / 2);
-                            }
-
-                            i += s * r;
-                            if (item.getCount() > 1) {
-                                i = 40;
-                            }
-                        }
+                    if (isBook) {
+                        enchantabilitySum = Math.max(1, enchantabilitySum / 2);
                     }
+
+                    totalCost += enchantabilitySum * ingredientLevel;
+
+                    if (item.getCount() > 1) {
+                        totalCost = 40;
+                    }
+                }
             }
 
             if (StringUtils.isBlank(this.newItemName)) {
                 if (item.hasCustomName()) {
-                    k = 1;
-                    i += k;
+                    totalCost++;
+                    existingEnchantments.remove(Enchantment.Rarity.COMMON);
                     resultStack.removeCustomName();
                 }
             } else if (!this.newItemName.equals(item.getName().getString())) {
-                k = 1;
-                i += k;
+                totalCost++;
+                existingEnchantments.remove(Enchantment.Rarity.COMMON);
                 resultStack.setCustomName(Text.literal(this.newItemName));
             }
 
-            this.levelCost.set(j + i);
-            if (i <= 0) {
+            this.levelCost.set(totalCost);
+
+            if (totalCost <= 0) {
                 resultStack = ItemStack.EMPTY;
             }
 
-            if (k == i && k > 0 && this.levelCost.get() >= 40) {
+            if (totalCost == 1 && this.levelCost.get() >= 40) {
                 this.levelCost.set(39);
             }
 
@@ -159,17 +144,18 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             }
 
             if (!resultStack.isEmpty()) {
-                int t = resultStack.getRepairCost();
-                if (!ingredient.isEmpty() && t < ingredient.getRepairCost()) {
-                    t = ingredient.getRepairCost();
+                int repairCost = resultStack.getRepairCost();
+
+                if (!ingredient.isEmpty() && repairCost < ingredient.getRepairCost()) {
+                    repairCost = ingredient.getRepairCost();
                 }
 
-                if (k != i || k == 0) {
-                    t = getNextCost(t);
+                if (totalCost != 1) {
+                    repairCost = getNextCost(repairCost);
                 }
 
-                resultStack.setRepairCost(t);
-                EnchantmentHelper.set(map, resultStack);
+                resultStack.setRepairCost(repairCost);
+                EnchantmentHelper.set(existingEnchantments, resultStack);
             }
 
             this.output.setStack(0, resultStack);
@@ -177,12 +163,21 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
         }
     }
 
+    private int getEnchantabilityWeight(Enchantment enchantment) {
+        return switch (enchantment.getRarity()) {
+            case COMMON -> 1;
+            case UNCOMMON -> 2;
+            case RARE -> 4;
+            case VERY_RARE -> 8;
+        };
+    }
+
     @Inject(method = "updateResult()V", at = @At("HEAD"), cancellable = true)
     public void updateResult(CallbackInfo ci) {
         ItemStack item = this.input.getStack(0);
         ItemStack ingredient = this.input.getStack(1);
         if (EnchantableHorseArmor.isHorseArmor(item)) {
-            horseArmorHandler(item, ingredient);
+            horseArmorAnvilHandler(item, ingredient);
             ci.cancel();
         }
     }
