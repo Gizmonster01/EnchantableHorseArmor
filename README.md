@@ -1,9 +1,5 @@
-# Fabric Example Mod
+# Enchantable Horse Armor (WIP)
 
-## Setup
+This is a working title. Extremely WIP and unsafe. This is becoming a full horse overhaul mod.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+I haven't decided which license I'm going to use. For now CC0.
