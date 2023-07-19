@@ -9,7 +9,8 @@
     "HorseArmorItemMixin"
   ],
   "client": [
-    "HorseArmorFeatureRendererMixin"
+    "HorseArmorFeatureRendererMixin",
+    "HorseEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

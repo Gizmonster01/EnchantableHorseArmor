@@ -11,6 +11,6 @@ public class HippocampusEnchantment extends HorseArmorEnchantment {
 
     @Override
     public boolean isTreasure() {
-        return false;
+        return true;
     }
 }

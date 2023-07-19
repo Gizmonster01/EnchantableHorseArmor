@@ -1,6 +1,5 @@
 package monster.giz.EnchantableHorseArmor.enchantments;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import monster.giz.EnchantableHorseArmor.util.EHALogger;
 import net.minecraft.enchantment.Enchantment;
@@ -12,7 +11,6 @@ import net.minecraft.entity.passive.HorseEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -58,29 +56,22 @@ public class HorseEnchantments {
     }
 
     public static List<EnchantmentLevelEntry> getPossibleHorseEntries(int power, boolean treasureAllowed) {
-        List<EnchantmentLevelEntry> list = Lists.newArrayList();
-        Iterator var6 = horseEnchantments.iterator();
+        List<EnchantmentLevelEntry> list = new ArrayList<>();
 
-        while(true) {
-            while(true) {
-                Enchantment enchantment;
-                do {
-                    do {
-                        if (!var6.hasNext()) {
-                            return list;
+        for (Enchantment ench : horseEnchantments) {
+            if (!ench.isTreasure() || treasureAllowed) {
+                if (ench.isAvailableForRandomSelection()) {
+                    for (int i = ench.getMaxLevel(); i > ench.getMinLevel() - 1; --i) {
+                        if (power >= ench.getMinPower(i) && power <= ench.getMaxPower(i)) {
+                            list.add(new EnchantmentLevelEntry(ench, i));
+                            break;
                         }
-                        enchantment = (Enchantment)var6.next();
-                    } while(enchantment.isTreasure() && !treasureAllowed);
-                } while(!enchantment.isAvailableForRandomSelection());
-
-                for (int i = enchantment.getMaxLevel(); i > enchantment.getMinLevel() - 1; --i) {
-                    if (power >= enchantment.getMinPower(i) && power <= enchantment.getMaxPower(i)) {
-                        list.add(new EnchantmentLevelEntry(enchantment, i));
-                        break;
                     }
                 }
             }
         }
+
+        return list;
     }
 
     public static boolean hasHorseSwim(LivingEntity entity) {
