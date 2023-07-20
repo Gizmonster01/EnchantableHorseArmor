@@ -1,6 +1,6 @@
 package monster.giz.EnchantableHorseArmor.mixin;
 
-import monster.giz.EnchantableHorseArmor.util.EHALogger;
+import monster.giz.EnchantableHorseArmor.access.HorseArmorFeatureAccess;
 import net.minecraft.client.render.entity.AbstractHorseEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.HorseEntityRenderer;
@@ -20,7 +20,6 @@ public abstract class HorseEntityRendererMixin extends AbstractHorseEntityRender
 
     @Inject(at = @At("TAIL"), method = "<init>")
     public void enchantablehorsearmor$horseEntityRendererConstructorInjector(EntityRendererFactory.Context context, CallbackInfo ci) {
-        EHALogger.log("Made it to that point you're looking for ------");
-        //((HorseArmorFeatureAccess) features.get(1)).defineAtlas(context.getModelManager());
+        ((HorseArmorFeatureAccess) features.get(1)).defineAtlas(context.getModelManager());
     }
 }
