@@ -6,10 +6,18 @@ import net.minecraft.util.Identifier;
 
 public class HorseArmorUtils {
 
+
+    public static Identifier getTestTrimIdentifier(Item item) {
+        //Identifier identifier = Identifier.of("minecraft","trims/models/horse/test_" + getHorseArmorTypeOrName(item));
+        //EHALogger.log("TRIM PATH: " + identifier.getPath());
+        return Identifier.of("minecraft","trims/models/horse/test_diamond");
+    }
+
+
     public static Identifier getHorseTrimIdentifier(ArmorTrim trim, Item item) {
         Identifier identifier = (trim.getPattern().value()).assetId();
         return identifier.withPath((path) -> {
-            return "trims/models/horse/" + path + "_leggings_" + getHorseArmorTypeOrName(item);
+            return "trims/models/horse/" + path + "_" + getHorseArmorTypeOrName(item);
         });
     }
 
