@@ -88,10 +88,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
                         acceptableEnchantment = true;
                     }
 
-                    Iterator ingredIterator = map.keySet().iterator();
-
-                    while(ingredIterator.hasNext()) {
-                        Enchantment enchantment2 = (Enchantment)ingredIterator.next();
+                    for (Enchantment enchantment2 : map.keySet()) {
                         if (enchantment2 != enchantment && !enchantment.canCombine(enchantment2)) {
                             acceptableEnchantment = false;
                             ++i;
@@ -176,7 +173,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             this.sendContentUpdates();
         }
     }
-    
+
     private int getEnchantabilityWeight(Enchantment enchantment) {
         return switch (enchantment.getRarity()) {
             case COMMON -> 1;
