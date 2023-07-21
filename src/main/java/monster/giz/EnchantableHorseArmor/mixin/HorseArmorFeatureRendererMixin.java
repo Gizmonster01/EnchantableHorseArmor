@@ -1,7 +1,7 @@
 package monster.giz.EnchantableHorseArmor.mixin;
 
+import monster.giz.EnchantableHorseArmor.access.ArmorTrimAccess;
 import monster.giz.EnchantableHorseArmor.access.HorseArmorFeatureAccess;
-import monster.giz.EnchantableHorseArmor.util.HorseArmorTrimHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -77,7 +77,7 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
     }
 
     private void renderArmorTrim(HorseArmorItem item, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim) {
-        Identifier trimIdentifier = HorseArmorTrimHelper.getTrimIdentifier(item, trim);
+        Identifier trimIdentifier = ((ArmorTrimAccess) trim).getHorseTrimModelIdentifier(item);
         Sprite sprite = this.armorTrimsAtlas.getSprite(trimIdentifier);
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(ARMOR_TRIMS_ATLAS_TEXTURE, false)));
         model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
