@@ -1,7 +1,8 @@
 package monster.giz.EnchantableHorseArmor.access;
 
 import net.minecraft.item.HorseArmorItem;
+import net.minecraft.util.Identifier;
 
 public interface ArmorTrimAccess {
-    String getHorseMaterialAssetName(HorseArmorItem armor);
+    Identifier getHorseTrimModelIdentifier(HorseArmorItem armor);
 }
