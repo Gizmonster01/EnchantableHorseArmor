@@ -8,7 +8,6 @@ import net.minecraft.util.Identifier;
 public class HorseArmorTrimHelper {
 
     public static Identifier getTrimIdentifier(HorseArmorItem item, ArmorTrim trim) {
-        EHALogger.log(item.getTranslationKey());
         return Identifier.of("minecraft","trims/models/horse/" + ((ArmorTrimAccess)trim).getHorseMaterialAssetName(item));
     }
 
