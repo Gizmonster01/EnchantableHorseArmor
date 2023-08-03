@@ -35,7 +35,11 @@
                 "trims/models/armor/raiser_leggings",
                 "trims/models/armor/host",
                 "trims/models/armor/host_leggings",
-				"trims/models/horse/test"
+
+				"trims/models/horse/sentry",
+                "trims/models/horse/vex",
+                "trims/models/horse/silence",
+                "trims/models/horse/coast"
             ],
             "palette_key": "trims/color_palettes/trim_palette",
             "permutations": {
