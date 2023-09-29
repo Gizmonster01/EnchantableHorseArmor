@@ -29,8 +29,6 @@ import static net.minecraft.screen.AnvilScreenHandler.getNextCost;
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
     @Shadow
-    private int repairItemUsage;
-    @Shadow
     private String newItemName;
     @Shadow @Final
     private Property levelCost;
@@ -111,10 +109,6 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             resultStack = ItemStack.EMPTY;
         }
 
-        if (totalCost == 0 && totalCost > 0 && totalCost >= 40) {
-            this.levelCost.set(39);
-        }
-
         if (totalCost >= 40 && !this.player.getAbilities().creativeMode) {
             resultStack = ItemStack.EMPTY;
         }
@@ -125,7 +119,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
                 repairCost = ingredient.getRepairCost();
             }
 
-            if (totalCost != 1 && totalCost == 0) {
+            if (totalCost == 0) {
                 repairCost = getNextCost(repairCost);
             }
 
@@ -139,18 +133,12 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
     @Unique
     private int getEnchantmentCost(Enchantment enchantment) {
-        switch (enchantment.getRarity()) {
-            case COMMON:
-                return 1;
-            case UNCOMMON:
-                return 2;
-            case RARE:
-                return 4;
-            case VERY_RARE:
-                return 8;
-            default:
-                return 1;
-        }
+        return switch (enchantment.getRarity()) {
+            case UNCOMMON -> 2;
+            case RARE -> 4;
+            case VERY_RARE -> 8;
+            default -> 1;
+        };
     }
 
     @Inject(method = "updateResult()V", at = @At("HEAD"), cancellable = true)
