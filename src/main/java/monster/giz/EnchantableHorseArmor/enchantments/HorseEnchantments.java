@@ -1,54 +1,34 @@
 package monster.giz.EnchantableHorseArmor.enchantments;
 
-import com.google.common.collect.Sets;
-import monster.giz.EnchantableHorseArmor.util.EHALogger;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.HorseEntity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class HorseEnchantments {
 
-    public static HorseArmorEnchantment AQUA_EQUINE;
+    //public static HorseArmorEnchantment AQUA_EQUINE;
+    private static final Set<Enchantment> horseEnchantmentsSet = new HashSet<>();
 
-    private static List<Enchantment> horseEnchantments;
-
-    private static HashSet<Enchantment> horseEnchantmentsSet;
-
-
-    static {
-        horseEnchantments = new ArrayList<>();
-        horseEnchantments.add(Enchantments.PROTECTION);
-        horseEnchantments.add(Enchantments.PROJECTILE_PROTECTION);
-        horseEnchantments.add(Enchantments.BLAST_PROTECTION);
-        horseEnchantments.add(Enchantments.FIRE_PROTECTION);
-        horseEnchantments.add(Enchantments.FEATHER_FALLING);
-        horseEnchantments.add(Enchantments.FROST_WALKER);
-        horseEnchantments.add(Enchantments.DEPTH_STRIDER);
-        horseEnchantments.add(Enchantments.SOUL_SPEED);
-        horseEnchantments.add(Enchantments.THORNS);
-
-        horseEnchantmentsSet = new HashSet<Enchantment>();
-    }
-    //TODO: better implement custom horse armor enchantments because this sucks ASS
     public static void initialize() {
-        /*
-        AQUA_EQUINE = Registry.register(
-                Registries.ENCHANTMENT,
-                new Identifier(EnchantableHorseArmor.NAMESPACE, "aqua_equine"),
-                new HippocampusEnchantment()
-        );
-        horseEnchantments.add(AQUA_EQUINE);\
-         */
+        addEnchantment(Enchantments.PROTECTION);
+        addEnchantment(Enchantments.PROJECTILE_PROTECTION);
+        addEnchantment(Enchantments.BLAST_PROTECTION);
+        addEnchantment(Enchantments.FIRE_PROTECTION);
+        addEnchantment(Enchantments.FEATHER_FALLING);
+        addEnchantment(Enchantments.FROST_WALKER);
+        addEnchantment(Enchantments.DEPTH_STRIDER);
+        addEnchantment(Enchantments.SOUL_SPEED);
+        addEnchantment(Enchantments.THORNS);
+    }
 
-        horseEnchantmentsSet = Sets.newHashSet(horseEnchantments);
+    private static void addEnchantment(Enchantment enchantment) {
+        horseEnchantmentsSet.add(enchantment);
     }
 
     public static boolean isAcceptableHorseEnchantment(Enchantment enchantment) {
@@ -58,7 +38,7 @@ public class HorseEnchantments {
     public static List<EnchantmentLevelEntry> getPossibleHorseEntries(int power, boolean treasureAllowed) {
         List<EnchantmentLevelEntry> list = new ArrayList<>();
 
-        for (Enchantment ench : horseEnchantments) {
+        for (Enchantment ench : horseEnchantmentsSet) {
             if (!ench.isTreasure() || treasureAllowed) {
                 if (ench.isAvailableForRandomSelection()) {
                     for (int i = ench.getMaxLevel(); i > ench.getMinLevel() - 1; --i) {
@@ -74,6 +54,7 @@ public class HorseEnchantments {
         return list;
     }
 
+    /*
     public static boolean hasHorseSwim(LivingEntity entity) {
         if (entity instanceof HorseEntity) {
             HorseEntity horse = ((HorseEntity) entity);
@@ -90,5 +71,6 @@ public class HorseEnchantments {
         }
         return false;
     }
+     */
 
 }
