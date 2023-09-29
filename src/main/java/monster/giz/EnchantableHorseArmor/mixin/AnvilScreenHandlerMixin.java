@@ -66,7 +66,10 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             if (enchantment == null) continue;
 
             int existingLevel = itemEnchantments.getOrDefault(enchantment, 0);
-            int newLevel = Math.max(existingLevel, ingredientEnchants.get(enchantment));
+            int ingredientLevel = ingredientEnchants.get(enchantment);
+
+            // Only increase level if the levels are the same
+            int newLevel = (existingLevel == ingredientLevel) ? existingLevel + 1 : Math.max(existingLevel, ingredientLevel);
 
             if (!HorseEnchantments.isAcceptableHorseEnchantment(enchantment) && !(this.player.getAbilities().creativeMode || item.isOf(Items.ENCHANTED_BOOK))) {
                 canApplyEnchantment = false;
@@ -80,7 +83,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
             }
 
             if (canApplyEnchantment) {
-                newLevel = Math.min(newLevel + 1, enchantment.getMaxLevel()); // Combine enchantments
+                newLevel = Math.min(newLevel, enchantment.getMaxLevel());
                 itemEnchantments.put(enchantment, newLevel);
 
                 int enchantmentCost = getEnchantmentCost(enchantment);
