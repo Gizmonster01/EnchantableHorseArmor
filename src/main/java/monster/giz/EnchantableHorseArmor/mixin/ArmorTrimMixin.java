@@ -22,17 +22,13 @@ public abstract class ArmorTrimMixin implements ArmorTrimAccess {
     @Shadow @Final private RegistryEntry<ArmorTrimPattern> pattern;
 
     // TODO: Pattern support
-    public Identifier getHorseTrimModelIdentifier(HorseArmorItem armor) {
+    public Identifier enchantableHorseArmor$getHorseTrimModelIdentifier(HorseArmorItem armor) {
         Identifier identifier = (pattern.value().assetId());
 
-        if (((HorseArmorItemAccess) armor).getMaterial() == null) {
-            return identifier.withPath((path) -> {
-                return "trims/models/horse/" + path + "_" + material.value().assetName();
-            });
+        if (((HorseArmorItemAccess) armor).enchantableHorseArmor$getMaterial() == null) {
+            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + material.value().assetName());
         } else {
-            return identifier.withPath((path) -> {
-                return "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(((HorseArmorItemAccess) armor).getMaterial());
-            });
+            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(((HorseArmorItemAccess) armor).enchantableHorseArmor$getMaterial()));
         }
     }
 }

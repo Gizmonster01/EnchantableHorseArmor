@@ -22,10 +22,7 @@ import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 
 import static net.minecraft.client.render.TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE;
 
@@ -34,6 +31,7 @@ import static net.minecraft.client.render.TexturedRenderLayers.ARMOR_TRIMS_ATLAS
 public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity, HorseEntityModel<HorseEntity>> implements HorseArmorFeatureAccess {
     @Shadow @Final
     private HorseEntityModel<HorseEntity> model;
+    @Unique
     private SpriteAtlasTexture armorTrimsAtlas;
 
     public HorseArmorFeatureRendererMixin(FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>> context) {
@@ -47,10 +45,9 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
     @Overwrite
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseEntity horseEntity, float entityYaw, float partialTicks, float headPitch, float scale, float tickDelta, float animationProgress) {
         ItemStack armorStack = horseEntity.getArmorType();
-        if (!(armorStack.getItem() instanceof HorseArmorItem))
+        if (!(armorStack.getItem() instanceof HorseArmorItem horseArmorItem))
             return;
 
-        HorseArmorItem horseArmorItem = (HorseArmorItem) armorStack.getItem();
         boolean hasGlint = armorStack.hasGlint();
 
         this.getContextModel().copyStateTo(this.model);
@@ -76,14 +73,15 @@ public class HorseArmorFeatureRendererMixin extends FeatureRenderer<HorseEntity,
         });
     }
 
+    @Unique
     private void renderArmorTrim(HorseArmorItem item, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim) {
-        Identifier trimIdentifier = ((ArmorTrimAccess) trim).getHorseTrimModelIdentifier(item);
+        Identifier trimIdentifier = ((ArmorTrimAccess) trim).enchantableHorseArmor$getHorseTrimModelIdentifier(item);
         Sprite sprite = this.armorTrimsAtlas.getSprite(trimIdentifier);
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(ARMOR_TRIMS_ATLAS_TEXTURE, false)));
         model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public void defineAtlas(BakedModelManager bakery) {
+    public void enchantableHorseArmor$defineAtlas(BakedModelManager bakery) {
         this.armorTrimsAtlas = bakery.getAtlas(ARMOR_TRIMS_ATLAS_TEXTURE);
     }
 

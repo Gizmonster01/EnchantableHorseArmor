@@ -38,8 +38,7 @@ public class EnchantmentHelperMixin {
             cancellable = true
     )
     private static void enchantablehorsearmor$getEquipmentLevel(Enchantment enchantment, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
-        if (entity instanceof HorseEntity) {
-            HorseEntity horse = ((HorseEntity) entity);
+        if (entity instanceof HorseEntity horse) {
             int i = EnchantmentHelper.getLevel(enchantment, horse.getArmorType());
             if (enchantment == Enchantments.FROST_WALKER) {
                 if (i > 0) {

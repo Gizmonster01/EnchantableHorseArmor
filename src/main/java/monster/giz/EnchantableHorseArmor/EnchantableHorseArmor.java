@@ -25,9 +25,9 @@ public class EnchantableHorseArmor implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		HorseEnchantments.initialize();
-		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).setMaterial(ArmorMaterials.LEATHER);
-		((HorseArmorItemAccess) Items.DIAMOND_HORSE_ARMOR).setMaterial(ArmorMaterials.DIAMOND);
-		((HorseArmorItemAccess) Items.GOLDEN_HORSE_ARMOR).setMaterial(ArmorMaterials.GOLD);
+		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).enchantableHorseArmor$setMaterial(ArmorMaterials.LEATHER);
+		((HorseArmorItemAccess) Items.DIAMOND_HORSE_ARMOR).enchantableHorseArmor$setMaterial(ArmorMaterials.DIAMOND);
+		((HorseArmorItemAccess) Items.GOLDEN_HORSE_ARMOR).enchantableHorseArmor$setMaterial(ArmorMaterials.GOLD);
 	}
 
 

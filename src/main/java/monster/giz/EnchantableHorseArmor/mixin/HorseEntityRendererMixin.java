@@ -20,6 +20,6 @@ public abstract class HorseEntityRendererMixin extends AbstractHorseEntityRender
 
     @Inject(at = @At("TAIL"), method = "<init>")
     public void enchantablehorsearmor$horseEntityRendererConstructorInjector(EntityRendererFactory.Context context, CallbackInfo ci) {
-        ((HorseArmorFeatureAccess) features.get(1)).defineAtlas(context.getModelManager());
+        ((HorseArmorFeatureAccess) features.get(1)).enchantableHorseArmor$defineAtlas(context.getModelManager());
     }
 }

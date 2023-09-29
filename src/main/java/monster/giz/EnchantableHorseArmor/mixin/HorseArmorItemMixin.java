@@ -7,11 +7,13 @@ import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 
 @Mixin(HorseArmorItem.class)
 public abstract class HorseArmorItemMixin extends Item implements HorseArmorItemAccess {
 
+    @Unique
     private ArmorMaterial material;
 
     public HorseArmorItemMixin(Item.Settings settings) {
@@ -28,8 +30,8 @@ public abstract class HorseArmorItemMixin extends Item implements HorseArmorItem
         return 1;
     }
 
-    public void setMaterial(ArmorMaterial material) { this.material = material; }
+    public void enchantableHorseArmor$setMaterial(ArmorMaterial material) { this.material = material; }
 
-    public ArmorMaterial getMaterial() { return material; }
+    public ArmorMaterial enchantableHorseArmor$getMaterial() { return material; }
 
 }
