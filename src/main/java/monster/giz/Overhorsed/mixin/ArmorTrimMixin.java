@@ -24,7 +24,6 @@ public abstract class ArmorTrimMixin implements ArmorTrimAccess {
     // TODO: Pattern support
     public Identifier overhorsed$getHorseTrimModelIdentifier(HorseArmorItem armor) {
         Identifier identifier = (pattern.value().assetId());
-
         if (((HorseArmorItemAccess) armor).overhorsed$getMaterial() == null) {
             return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + material.value().assetName());
         } else {
