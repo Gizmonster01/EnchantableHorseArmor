@@ -1,8 +1,8 @@
-package monster.giz.EnchantableHorseArmor.mixin;
+package monster.giz.Overhorsed.mixin;
 
 
-import monster.giz.EnchantableHorseArmor.EnchantableHorseArmor;
-import monster.giz.EnchantableHorseArmor.enchantments.HorseEnchantments;
+import monster.giz.Overhorsed.Overhorsed;
+import monster.giz.Overhorsed.enchantments.HorseEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -26,8 +26,8 @@ public class EnchantmentHelperMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void enchantablehorsearmor$getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
-        if (EnchantableHorseArmor.isHorseArmor(stack) && !stack.isOf(Items.BOOK)) {
+    private static void overhorsed$getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
+        if (Overhorsed.isHorseArmor(stack) && !stack.isOf(Items.BOOK)) {
             cir.setReturnValue(HorseEnchantments.getPossibleHorseEntries(power, treasureAllowed));
         }
     }
@@ -37,7 +37,7 @@ public class EnchantmentHelperMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void enchantablehorsearmor$getEquipmentLevel(Enchantment enchantment, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
+    private static void overhorsed$getEquipmentLevel(Enchantment enchantment, LivingEntity entity, CallbackInfoReturnable<Integer> cir) {
         if (entity instanceof HorseEntity horse) {
             int i = EnchantmentHelper.getLevel(enchantment, horse.getArmorType());
             if (enchantment == Enchantments.FROST_WALKER) {

@@ -1,6 +1,6 @@
-package monster.giz.EnchantableHorseArmor.enchantments;
+package monster.giz.Overhorsed.enchantments;
 
-import monster.giz.EnchantableHorseArmor.EnchantableHorseArmor;
+import monster.giz.Overhorsed.Overhorsed;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,7 +21,7 @@ public class HorseArmorEnchantment extends Enchantment {
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        return EnchantableHorseArmor.isHorseArmor(stack);
+        return Overhorsed.isHorseArmor(stack);
     }
 
 }

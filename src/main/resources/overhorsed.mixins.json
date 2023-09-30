@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "monster.giz.EnchantableHorseArmor.mixin",
+  "package": "monster.giz.Overhorsed.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnvilScreenHandlerMixin",

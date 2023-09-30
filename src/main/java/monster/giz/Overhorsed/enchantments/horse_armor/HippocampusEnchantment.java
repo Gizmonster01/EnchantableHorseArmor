@@ -1,6 +1,6 @@
-package monster.giz.EnchantableHorseArmor.enchantments.horse_armor;
+package monster.giz.Overhorsed.enchantments.horse_armor;
 
-import monster.giz.EnchantableHorseArmor.enchantments.HorseArmorEnchantment;
+import monster.giz.Overhorsed.enchantments.HorseArmorEnchantment;
 import net.minecraft.enchantment.Enchantment;
 
 public class HippocampusEnchantment extends HorseArmorEnchantment {

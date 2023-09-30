@@ -1,7 +1,7 @@
-package monster.giz.EnchantableHorseArmor.mixin;
+package monster.giz.Overhorsed.mixin;
 
-import monster.giz.EnchantableHorseArmor.EnchantableHorseArmor;
-import monster.giz.EnchantableHorseArmor.enchantments.HorseEnchantments;
+import monster.giz.Overhorsed.Overhorsed;
+import monster.giz.Overhorsed.enchantments.HorseEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerInventory;
@@ -148,7 +148,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
     public void updateResult(CallbackInfo ci) {
         ItemStack item = this.input.getStack(0);
         ItemStack ingredient = this.input.getStack(1);
-        if (EnchantableHorseArmor.isHorseArmor(item)) {
+        if (Overhorsed.isHorseArmor(item)) {
             horseArmorHandler(item, ingredient);
             ci.cancel();
         }

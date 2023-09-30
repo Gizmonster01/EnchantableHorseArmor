@@ -1,4 +1,4 @@
-package monster.giz.EnchantableHorseArmor.enchantments;
+package monster.giz.Overhorsed.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;

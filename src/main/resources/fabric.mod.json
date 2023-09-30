@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "enchantablehorsearmor",
+  "id": "overhorsed",
   "version": "${version}",
 
-  "name": "Enchantable Horse Armor",
+  "name": "Overhorsed",
   "description": "A mod that brings full enchantment support to horse armor",
   "authors": [
     "gizmonster"
@@ -19,14 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "monster.giz.EnchantableHorseArmor.EnchantableHorseArmor"
+      "monster.giz.Overhorsed.Overhorsed"
     ],
     "client": [
 
     ]
   },
   "mixins": [
-    "enchantablehorsearmor.mixins.json"
+    "overhorsed.mixins.json"
   ],
 
   "depends": {

@@ -1,7 +1,7 @@
-package monster.giz.EnchantableHorseArmor.mixin;
+package monster.giz.Overhorsed.mixin;
 
 
-import monster.giz.EnchantableHorseArmor.access.HorseArmorItemAccess;
+import monster.giz.Overhorsed.access.HorseArmorItemAccess;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.Item;
@@ -30,8 +30,8 @@ public abstract class HorseArmorItemMixin extends Item implements HorseArmorItem
         return 1;
     }
 
-    public void enchantableHorseArmor$setMaterial(ArmorMaterial material) { this.material = material; }
+    public void overhorsed$setMaterial(ArmorMaterial material) { this.material = material; }
 
-    public ArmorMaterial enchantableHorseArmor$getMaterial() { return material; }
+    public ArmorMaterial overhorsed$getMaterial() { return material; }
 
 }

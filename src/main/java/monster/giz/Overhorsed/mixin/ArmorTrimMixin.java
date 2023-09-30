@@ -1,7 +1,7 @@
-package monster.giz.EnchantableHorseArmor.mixin;
+package monster.giz.Overhorsed.mixin;
 
-import monster.giz.EnchantableHorseArmor.access.ArmorTrimAccess;
-import monster.giz.EnchantableHorseArmor.access.HorseArmorItemAccess;
+import monster.giz.Overhorsed.access.ArmorTrimAccess;
+import monster.giz.Overhorsed.access.HorseArmorItemAccess;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.trim.ArmorTrim;
@@ -22,13 +22,13 @@ public abstract class ArmorTrimMixin implements ArmorTrimAccess {
     @Shadow @Final private RegistryEntry<ArmorTrimPattern> pattern;
 
     // TODO: Pattern support
-    public Identifier enchantableHorseArmor$getHorseTrimModelIdentifier(HorseArmorItem armor) {
+    public Identifier overhorsed$getHorseTrimModelIdentifier(HorseArmorItem armor) {
         Identifier identifier = (pattern.value().assetId());
 
-        if (((HorseArmorItemAccess) armor).enchantableHorseArmor$getMaterial() == null) {
+        if (((HorseArmorItemAccess) armor).overhorsed$getMaterial() == null) {
             return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + material.value().assetName());
         } else {
-            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(((HorseArmorItemAccess) armor).enchantableHorseArmor$getMaterial()));
+            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(((HorseArmorItemAccess) armor).overhorsed$getMaterial()));
         }
     }
 }

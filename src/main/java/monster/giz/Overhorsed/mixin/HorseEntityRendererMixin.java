@@ -1,6 +1,6 @@
-package monster.giz.EnchantableHorseArmor.mixin;
+package monster.giz.Overhorsed.mixin;
 
-import monster.giz.EnchantableHorseArmor.access.HorseArmorFeatureAccess;
+import monster.giz.Overhorsed.access.HorseArmorFeatureAccess;
 import net.minecraft.client.render.entity.AbstractHorseEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.HorseEntityRenderer;
@@ -19,7 +19,7 @@ public abstract class HorseEntityRendererMixin extends AbstractHorseEntityRender
     }
 
     @Inject(at = @At("TAIL"), method = "<init>")
-    public void enchantablehorsearmor$horseEntityRendererConstructorInjector(EntityRendererFactory.Context context, CallbackInfo ci) {
-        ((HorseArmorFeatureAccess) features.get(1)).enchantableHorseArmor$defineAtlas(context.getModelManager());
+    public void overhorsed$horseEntityRendererConstructorInjector(EntityRendererFactory.Context context, CallbackInfo ci) {
+        ((HorseArmorFeatureAccess) features.get(1)).overhorsed$defineAtlas(context.getModelManager());
     }
 }
