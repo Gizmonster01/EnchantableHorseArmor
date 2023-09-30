@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class OHLogger {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("enchantablehorsearmor");
+    public static final Logger LOGGER = LoggerFactory.getLogger("overhorsed");
 
     public static void log(String string) { LOGGER.info(string); }
 }

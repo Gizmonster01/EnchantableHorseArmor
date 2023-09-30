@@ -4,6 +4,7 @@
   "package": "monster.giz.Overhorsed.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractHorseEntityMixin",
     "AnvilScreenHandlerMixin",
     "EnchantmentHelperMixin",
     "HorseArmorItemMixin"

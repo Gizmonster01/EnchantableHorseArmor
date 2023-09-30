@@ -21,7 +21,6 @@ public abstract class ArmorTrimMixin implements ArmorTrimAccess {
 
     @Shadow @Final private RegistryEntry<ArmorTrimPattern> pattern;
 
-    // TODO: Pattern support
     public Identifier overhorsed$getHorseTrimModelIdentifier(HorseArmorItem armor) {
         Identifier identifier = (pattern.value().assetId());
         if (((HorseArmorItemAccess) armor).overhorsed$getMaterial() == null) {
