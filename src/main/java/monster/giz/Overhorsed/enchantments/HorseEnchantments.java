@@ -1,8 +1,13 @@
 package monster.giz.Overhorsed.enchantments;
 
+import monster.giz.Overhorsed.Overhorsed;
+import monster.giz.Overhorsed.enchantments.horse_armor.StrafingEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,9 +18,17 @@ import java.util.Set;
 public class HorseEnchantments {
 
     //public static HorseArmorEnchantment AQUA_EQUINE;
+    public static HorseArmorEnchantment STRAFING;
     private static final Set<Enchantment> horseEnchantmentsSet = new HashSet<>();
 
     public static void initialize() {
+
+        STRAFING = Registry.register(
+                Registries.ENCHANTMENT,
+                new Identifier(Overhorsed.NAMESPACE, "strafing"),
+                new StrafingEnchantment()
+        );
+
         addEnchantment(Enchantments.PROTECTION);
         addEnchantment(Enchantments.PROJECTILE_PROTECTION);
         addEnchantment(Enchantments.BLAST_PROTECTION);
@@ -25,6 +38,7 @@ public class HorseEnchantments {
         addEnchantment(Enchantments.DEPTH_STRIDER);
         addEnchantment(Enchantments.SOUL_SPEED);
         addEnchantment(Enchantments.THORNS);
+        addEnchantment(STRAFING);
     }
 
     private static void addEnchantment(Enchantment enchantment) {
