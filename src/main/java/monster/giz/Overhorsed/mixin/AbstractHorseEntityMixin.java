@@ -32,14 +32,14 @@ public abstract class AbstractHorseEntityMixin extends AnimalEntity implements I
 
     @Override
     public Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
-        float strafeSpeed = 0.5F;
+        float strafeSpeedModifier = 1;
         if (this.hasArmorInSlot()) {
-            strafeSpeed = getStrafeSpeed(((HorseEntity) ((Object) this)).getArmorType());
+            strafeSpeedModifier = getStrafeSpeed(((HorseEntity) ((Object) this)).getArmorType());
         }
         if (this.isOnGround() && this.jumpStrength == 0.0F && this.isAngry() && !this.jumping) {
             return Vec3d.ZERO;
         } else {
-            float f = controllingPlayer.sidewaysSpeed * strafeSpeed;
+            float f = (controllingPlayer.sidewaysSpeed * 0.5F) * strafeSpeedModifier;
             float g = controllingPlayer.forwardSpeed;
             if (g <= 0.0F) {
                 g *= 0.25F;
@@ -52,6 +52,6 @@ public abstract class AbstractHorseEntityMixin extends AnimalEntity implements I
     @Unique
     private static float getStrafeSpeed(ItemStack armor) {
         int i = EnchantmentHelper.getLevel(HorseEnchantments.STRAFING, armor);
-        return (0.5F + i);
+        return (0.25F + i);
     }
 }
