@@ -46,9 +46,7 @@ public abstract class HorseArmorFeatureRendererMixin extends FeatureRenderer<Hor
 
     @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/passive/HorseEntity;FFFFFF)V", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD)
     public void overhorsed$render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, HorseEntity horseEntity, float f, float g, float h, float j, float k, float l, CallbackInfo ci, ItemStack armorStack, HorseArmorItem horseArmorItem, float n, float o, float p, VertexConsumer vertexConsumer) {
-        ArmorTrim.getTrim(horseEntity.getWorld().getRegistryManager(), armorStack, false).ifPresent(trim -> {
-            this.renderArmorTrim(horseArmorItem, matrices, vertexConsumerProvider, light, trim);
-        });
+        ArmorTrim.getTrim(horseEntity.getWorld().getRegistryManager(), armorStack, false).ifPresent(trim -> this.renderArmorTrim(horseArmorItem, matrices, vertexConsumerProvider, light, trim));
         if (armorStack.hasGlint()) {
             this.renderGlint(matrices, vertexConsumerProvider, light);
         }
