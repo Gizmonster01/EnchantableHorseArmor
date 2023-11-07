@@ -25,7 +25,7 @@ public class Overhorsed implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		HorseEnchantments.initialize();
-		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.LEATHER);
+		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.IRON);
 		((HorseArmorItemAccess) Items.DIAMOND_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.DIAMOND);
 		((HorseArmorItemAccess) Items.GOLDEN_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.GOLD);
 	}
