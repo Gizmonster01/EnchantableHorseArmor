@@ -39,7 +39,8 @@
 				"trims/models/horse/sentry",
                 "trims/models/horse/vex",
                 "trims/models/horse/silence",
-                "trims/models/horse/coast"
+                "trims/models/horse/coast",
+                "trims/models/horse/wayfinder"
             ],
             "palette_key": "trims/color_palettes/trim_palette",
             "permutations": {
