@@ -16,17 +16,27 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ArmorTrim.class)
 public abstract class ArmorTrimMixin implements ArmorTrimAccess {
 
-    @Shadow protected abstract String getMaterialAssetNameFor(ArmorMaterial armorMaterial);
+    @Shadow
+    abstract String getMaterialAssetNameFor(ArmorMaterial armorMaterial);
     @Shadow @Final private RegistryEntry<ArmorTrimMaterial> material;
 
     @Shadow @Final private RegistryEntry<ArmorTrimPattern> pattern;
 
     public Identifier overhorsed$getHorseTrimModelIdentifier(HorseArmorItem armor) {
-        Identifier identifier = (pattern.value().assetId());
-        if (((HorseArmorItemAccess) armor).overhorsed$getMaterial() == null) {
+        ArmorMaterial armorMaterial = ((HorseArmorItemAccess) armor).overhorsed$getMaterial();
+        Identifier identifier = pattern.value().assetId();
+        if (armorMaterial == null) {
             return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + material.value().assetName());
         } else {
-            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(((HorseArmorItemAccess) armor).overhorsed$getMaterial()));
+            return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(armorMaterial));
         }
     }
+
+    /*
+            OHLogger.logOnce(
+                "Horse Armor Material: " + armorMaterial.getName() + "\n" +
+                        "Pattern Material: " + this.material.value() + "\n" +
+                        "Mapped Options: " + map.toString() + "\n" +
+                        "Passed Asset: " + assetName);
+     */
 }
