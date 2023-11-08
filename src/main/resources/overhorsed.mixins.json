@@ -7,14 +7,12 @@
     "AbstractHorseEntityMixin",
     "AnvilScreenHandlerMixin",
     "EnchantmentHelperMixin",
-    "HorseArmorItemMixin",
-    "HorseEntityMixin"
+    "HorseArmorItemMixin"
   ],
   "client": [
     "ArmorTrimMixin",
     "HorseArmorFeatureRendererMixin",
-    "HorseEntityRendererMixin",
-    "SmithingScreenMixin"
+    "HorseEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
