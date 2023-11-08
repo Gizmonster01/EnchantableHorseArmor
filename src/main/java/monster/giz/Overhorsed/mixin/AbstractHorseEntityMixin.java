@@ -1,5 +1,6 @@
 package monster.giz.Overhorsed.mixin;
 
+import monster.giz.Overhorsed.access.AbstractHorseEntityAccess;
 import monster.giz.Overhorsed.enchantments.HorseEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(AbstractHorseEntity.class)
-public abstract class AbstractHorseEntityMixin extends AnimalEntity implements InventoryChangedListener, RideableInventory, Tameable, JumpingMount, Saddleable {
+public abstract class AbstractHorseEntityMixin extends AnimalEntity implements InventoryChangedListener, RideableInventory, Tameable, JumpingMount, Saddleable, AbstractHorseEntityAccess {
 
     protected AbstractHorseEntityMixin(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -24,7 +25,8 @@ public abstract class AbstractHorseEntityMixin extends AnimalEntity implements I
 
     @Shadow protected float jumpStrength;
 
-    @Shadow boolean isAngry() {
+    @Shadow
+    public boolean isAngry() {
         return false;
     }
 
@@ -48,6 +50,8 @@ public abstract class AbstractHorseEntityMixin extends AnimalEntity implements I
             return new Vec3d((double)f, 0.0, (double)g);
         }
     }
+
+
 
     @Unique
     private static float getStrafeSpeed(ItemStack armor) {
