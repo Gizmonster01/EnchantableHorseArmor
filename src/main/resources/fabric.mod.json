@@ -29,7 +29,7 @@
     "overhorsed.mixins.json"
   ],
 
-  "accessWidener" : "overhorsed.accesswidener",
+  "accessWidener" : "overhorsed.accessWidener",
 
   "depends": {
     "fabricloader": ">=0.14.21",
