@@ -7,7 +7,8 @@
                 "trims/models/horse/vex",
                 "trims/models/horse/silence",
                 "trims/models/horse/coast",
-                "trims/models/horse/wayfinder"
+                "trims/models/horse/wayfinder",
+                "trims/models/horse/dune"
             ],
             "palette_key": "trims/color_palettes/trim_palette",
             "permutations": {
