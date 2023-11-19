@@ -1,0 +1,37 @@
+# Overhorsed Version 1.0 DEV
+enchanting:
+  # Controls what enchantments are permitted on horse armor.
+  # Controls whether enchantments can be obtained from enchantment table (if not treasure)
+  # and if they can be applied/combined via anvil.
+  horse-armor-enchantment-pool:
+    - minecraft:frost_walker
+    - minecraft:protection
+    - minecraft:projectile_protection
+    - minecraft:blast_protection
+    - minecraft:feather_falling
+    - minecraft:frost_walker
+    - minecraft:soul_speed
+    - minecraft:thorns
+    - overhorsed:strafing
+    - overhorsed:leaping
+
+  enchantments:
+    # Enchantment that increases side-to-side speed of mounted horse.
+    strafing:
+      enabled: true
+      max_level: 3
+      treasure: false
+      factor: 0.25 # Percentage of speed added per level
+
+    # Enchantment that increases jump height of mounted horse.
+    leaping:
+      enabled: true
+      max_level: 2
+      treasure: false
+      factor: 0.5 # Percentage of jump height added per level
+
+# Client settings
+client:
+  smithing_table:
+    #rotation_increment: -0.005f
+    rotation_increment: -5f
