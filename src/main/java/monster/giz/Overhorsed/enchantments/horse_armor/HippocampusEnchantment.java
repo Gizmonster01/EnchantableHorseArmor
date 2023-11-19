@@ -1,12 +1,12 @@
 package monster.giz.Overhorsed.enchantments.horse_armor;
 
-import monster.giz.Overhorsed.enchantments.HorseArmorEnchantment;
+import monster.giz.Overhorsed.enchantments.OverhorsedEnchantment;
 import net.minecraft.enchantment.Enchantment;
 
-public class HippocampusEnchantment extends HorseArmorEnchantment {
+public class HippocampusEnchantment extends OverhorsedEnchantment {
 
-    public HippocampusEnchantment() {
-        super(Enchantment.Rarity.UNCOMMON);
+    public HippocampusEnchantment(int maxLevel, boolean treasure) {
+        super(Enchantment.Rarity.UNCOMMON, maxLevel, treasure);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package monster.giz.Overhorsed.mixin;
 
 import monster.giz.Overhorsed.Overhorsed;
-import monster.giz.Overhorsed.enchantments.HorseEnchantments;
+import monster.giz.Overhorsed.enchantments.OverhorsedEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerInventory;
@@ -70,7 +70,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler{
 
             int newLevel = (existingLevel == ingredientLevel) ? existingLevel + 1 : Math.max(existingLevel, ingredientLevel);
 
-            if (!HorseEnchantments.isAcceptableHorseEnchantment(enchantment) && !(this.player.getAbilities().creativeMode || item.isOf(Items.ENCHANTED_BOOK))) {
+            if (!OverhorsedEnchantments.isAcceptableHorseEnchantment(enchantment) && !(this.player.getAbilities().creativeMode || item.isOf(Items.ENCHANTED_BOOK))) {
                 canApplyEnchantment = false;
             }
 

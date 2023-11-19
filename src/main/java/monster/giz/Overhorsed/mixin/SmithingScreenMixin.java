@@ -1,7 +1,6 @@
 package monster.giz.Overhorsed.mixin;
 
 import monster.giz.Overhorsed.Overhorsed;
-import monster.giz.Overhorsed.util.OHLogger;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.CyclingSlotIcon;
 import net.minecraft.client.gui.screen.ingame.ForgingScreen;
@@ -16,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.SmithingScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
@@ -38,11 +38,12 @@ public abstract class SmithingScreenMixin extends ForgingScreen<SmithingScreenHa
     @Shadow @Final
     private static Vector3f field_45497;
 
-    @Shadow @Final
-    private static Quaternionf ARMOR_STAND_ROTATION;
+    @Shadow @Nullable private ArmorStandEntity armorStand;
+    @Unique
+    private static Quaternionf initialHorseRotation;
+    private Quaternionf rotationIncrement;
 
     @Unique
-    private ArmorStandEntity armorStand;
     private HorseEntity horse;
 
     public SmithingScreenMixin(SmithingScreenHandler handler, PlayerInventory playerInventory, Text title, Identifier texture) {
@@ -51,11 +52,14 @@ public abstract class SmithingScreenMixin extends ForgingScreen<SmithingScreenHa
 
     @Inject(method = "setup()V",at = @At("TAIL"))
     public void setup(CallbackInfo ci) {
-        this.horse = new HorseEntity(EntityType.HORSE, this.client.world);
+        this.horse = new HorseEntity(EntityType.HORSE, armorStand.getEntityWorld());
         this.horse.setVariant(HorseColor.BROWN);
         this.horse.bodyYaw = 210.0F;
         this.horse.setPitch(25.0F);
-        OHLogger.log("Horse initialized?");
+        initialHorseRotation = (new Quaternionf()).rotationXYZ(0.43633232F, 0.0F, 3.1415927F);
+        rotationIncrement = new Quaternionf().rotateAxis(
+                -0.005f,
+                0, 1, 0);
     }
 
     @Inject(method = "equipArmorStand(Lnet/minecraft/item/ItemStack;)V", at = @At("TAIL"), cancellable = true)
@@ -68,6 +72,8 @@ public abstract class SmithingScreenMixin extends ForgingScreen<SmithingScreenHa
         }
     }
 
+
+    // TODO: Make horse rotation configurable
     @Inject(method = "drawBackground(Lnet/minecraft/client/gui/DrawContext;FII)V", at = @At("HEAD"), cancellable = true)
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo ci) {
         if (horse.isHorseArmor(handler.getSlot(3).getStack())) {
@@ -75,7 +81,8 @@ public abstract class SmithingScreenMixin extends ForgingScreen<SmithingScreenHa
             this.templateSlotIcon.render(this.handler, context, delta, this.x, this.y);
             this.baseSlotIcon.render(this.handler, context, delta, this.x, this.y);
             this.additionsSlotIcon.render(this.handler, context, delta, this.x, this.y);
-            InventoryScreen.drawEntity(context, (float)(this.x + 151), (float)(this.y + 65), 25, field_45497, ARMOR_STAND_ROTATION, (Quaternionf)null, this.horse);
+            InventoryScreen.drawEntity(context, (float)(this.x + 151), (float)(this.y + 65), 25, field_45497, initialHorseRotation, (Quaternionf)null, this.horse);
+            initialHorseRotation = initialHorseRotation.mul(rotationIncrement);
             ci.cancel();
         }
     }

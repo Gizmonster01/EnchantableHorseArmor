@@ -1,7 +1,7 @@
 package monster.giz.Overhorsed;
 
 import monster.giz.Overhorsed.access.HorseArmorItemAccess;
-import monster.giz.Overhorsed.enchantments.HorseEnchantments;
+import monster.giz.Overhorsed.enchantments.OverhorsedEnchantments;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.Item;
@@ -24,7 +24,8 @@ public class Overhorsed implements ModInitializer {
 	}
 	@Override
 	public void onInitialize() {
-		HorseEnchantments.initialize();
+
+		OverhorsedEnchantments.initialize();
 		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.IRON);
 		((HorseArmorItemAccess) Items.DIAMOND_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.DIAMOND);
 		((HorseArmorItemAccess) Items.GOLDEN_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.GOLD);

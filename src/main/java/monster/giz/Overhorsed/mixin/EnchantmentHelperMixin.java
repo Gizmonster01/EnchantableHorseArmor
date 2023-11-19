@@ -2,7 +2,7 @@ package monster.giz.Overhorsed.mixin;
 
 
 import monster.giz.Overhorsed.Overhorsed;
-import monster.giz.Overhorsed.enchantments.HorseEnchantments;
+import monster.giz.Overhorsed.enchantments.OverhorsedEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -28,7 +28,7 @@ public class EnchantmentHelperMixin {
     )
     private static void overhorsed$getPossibleEntries(int power, ItemStack stack, boolean treasureAllowed, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir) {
         if (Overhorsed.isHorseArmor(stack) && !stack.isOf(Items.BOOK)) {
-            cir.setReturnValue(HorseEnchantments.getPossibleHorseEntries(power, treasureAllowed));
+            cir.setReturnValue(OverhorsedEnchantments.getPossibleHorseEntries(power, treasureAllowed));
         }
     }
 

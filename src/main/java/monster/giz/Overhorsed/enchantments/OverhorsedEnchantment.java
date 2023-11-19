@@ -7,16 +7,19 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 
 
-public class HorseArmorEnchantment extends Enchantment {
+public class OverhorsedEnchantment extends Enchantment {
 
-    //horse type requirement?
+    public int maxLevel;
+    public boolean treasure;
 
-    protected HorseArmorEnchantment(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
+    protected OverhorsedEnchantment(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
         super(weight, type, slotTypes);
     }
 
-    protected HorseArmorEnchantment(Rarity weight) {
+    protected OverhorsedEnchantment(Rarity weight, int maxLevel, boolean treasure) {
         super(weight, EnchantmentTarget.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        this.maxLevel = maxLevel;
+        this.treasure = treasure;
     }
 
     @Override

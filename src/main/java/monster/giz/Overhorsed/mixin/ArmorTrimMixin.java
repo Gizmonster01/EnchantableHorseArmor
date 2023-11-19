@@ -31,12 +31,4 @@ public abstract class ArmorTrimMixin implements ArmorTrimAccess {
             return identifier.withPath((path) -> "trims/models/horse/" + path + "_" + this.getMaterialAssetNameFor(armorMaterial));
         }
     }
-
-    /*
-            OHLogger.logOnce(
-                "Horse Armor Material: " + armorMaterial.getName() + "\n" +
-                        "Pattern Material: " + this.material.value() + "\n" +
-                        "Mapped Options: " + map.toString() + "\n" +
-                        "Passed Asset: " + assetName);
-     */
 }
