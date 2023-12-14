@@ -29,6 +29,7 @@ public class Overhorsed implements ModInitializer {
 		((HorseArmorItemAccess) Items.IRON_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.IRON);
 		((HorseArmorItemAccess) Items.DIAMOND_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.DIAMOND);
 		((HorseArmorItemAccess) Items.GOLDEN_HORSE_ARMOR).overhorsed$setMaterial(ArmorMaterials.GOLD);
+
 	}
 
 

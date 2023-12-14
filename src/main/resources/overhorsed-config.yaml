@@ -3,7 +3,7 @@ enchanting:
   # Controls what enchantments are permitted on horse armor.
   # Controls whether enchantments can be obtained from enchantment table (if not treasure)
   # and if they can be applied/combined via anvil.
-  horse-armor-enchantment-pool:
+  horse_armor_enchantment_pool:
     - minecraft:frost_walker
     - minecraft:protection
     - minecraft:projectile_protection
@@ -33,5 +33,16 @@ enchanting:
 # Client settings
 client:
   smithing_table:
-    #rotation_increment: -0.005f
-    rotation_increment: -5f
+    # Controls how fast the horse model spins in the smithing table
+    rotation_increment: -0.025
+    # Multiplies above value by this while hovering over the model
+    hover_rotation_modifier: 0.5
+    # Where the horse is placed on the screen. Might want to leave this one alone.
+    horse_offset_x: 151
+    horse_offset_y: 61
+    # Size of the horse. I'd leave this one alone, probably.
+    horse_scale: 25
+    # Size of horse when hovering over it.
+    hover_scale: 35
+    # How many frames it takes to grow to the size above.
+    frame_time: 7

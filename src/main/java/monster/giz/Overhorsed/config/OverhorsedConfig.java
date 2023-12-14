@@ -10,10 +10,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 public class OverhorsedConfig {
     private static OverhorsedConfig INSTANCE;
@@ -21,6 +22,7 @@ public class OverhorsedConfig {
     public static final Path CONFIG_PATH = Paths.get(FabricLoader.getInstance().getConfigDir() + File.separator + FILE_NAME);
 
     private Map<String, Object> yamlMap;
+    private Map<String, Supplier<?>> supplierCache = new ConcurrentHashMap<>();
 
     private OverhorsedConfig() {
         reloadConfig();
@@ -62,87 +64,43 @@ public class OverhorsedConfig {
         }
     }
 
-    public static String getString(String key) {
-        Object value = getInstance().getValue(key);
-
-        if (value instanceof String) {
-            return (String) value;
-        }
-
-        return null;
-    }
-
-    public static int getInt(String key) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Integer) {
-            return (Integer) value;
-        }
-        return 0;
-    }
-
-    public static int getInt(String key, int defaultValue) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Integer) {
-            return (Integer) value;
-        }
-        return defaultValue;
-    }
-
-    public static float getFloat(String key) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Float) {
-            return (Float) value;
-        }
-        return 0.0f;
+    @SuppressWarnings("unchecked")
+    public static <T> T getConfigValue(String key, Class<T> type, T defaultValue) {
+        return (T) getInstance().supplierCache.computeIfAbsent(key, k -> () -> {
+            T value = getInstance().getValue(key, type);
+            return value != null ? value : defaultValue;
+        }).get();
     }
 
     public static float getFloat(String key, float defaultValue) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Float) {
-            return (Float) value;
-        }
-        return defaultValue;
+        return getConfigValue(key, Float.class, defaultValue);
     }
 
-    public static double getDouble(String key) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Double) {
-            return (Double) value;
-        }
-        return 0.0f;
+    public static int getInt(String key, int defaultValue) {
+        return getConfigValue(key, Integer.class, defaultValue);
     }
 
-    public static double getDouble(String key, double defaultValue) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Double) {
-            return (Double) value;
-        }
-        return defaultValue;
+    public static String getString(String key, String defaultValue) {
+        return getConfigValue(key, String.class, defaultValue);
     }
 
     public static boolean getBoolean(String key) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof Boolean) {
-            return (Boolean) value;
-        }
-        return false;
-    }
-
-    public static List<String> getStringList(String key) {
-        Object value = getInstance().getValue(key);
-        if (value instanceof List<?>) {
-            List<?> valueList = (List<?>) value;
-            return valueList.stream()
-                    .filter(String.class::isInstance)
-                    .map(String.class::cast)
-                    .collect(Collectors.toList());
-        }
-        return Collections.emptyList();
+        return getConfigValue(key, Boolean.class, false);
     }
 
     @SuppressWarnings("unchecked")
-    private Object getValue(String key) {
-        return getValueFromMap(yamlMap, key);
+    private <T> T getValue(String key, Class<T> type) {
+        Object value = getValueFromMap(yamlMap, key);
+        if (type.isInstance(value)) {
+            return type.cast(value);
+        } else if (type == Float.class && value instanceof String) {
+            try {
+                return type.cast(Float.parseFloat((String) value));
+            } catch (NumberFormatException e) {
+                // Handle parsing error
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
@@ -158,7 +116,21 @@ public class OverhorsedConfig {
                 return obj;
             }
         }
-
         return null;
     }
+
+    public static List<String> getStringList(String key) {
+        Object value = getInstance().getValueFromMap(getInstance().yamlMap, key);
+        List<String> stringList = new ArrayList<>();
+
+        if (value instanceof List<?>) {
+            for (Object item : (List<?>) value) {
+                if (item instanceof String) {
+                    stringList.add((String) item);
+                }
+            }
+        }
+        return stringList;
+    }
+
 }

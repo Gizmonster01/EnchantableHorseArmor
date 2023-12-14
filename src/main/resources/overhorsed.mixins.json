@@ -8,12 +8,14 @@
     "AnvilScreenHandlerMixin",
     "EnchantmentHelperMixin",
     "HorseArmorItemMixin",
-    "HorseEntityMixin"
+    "HorseEntityMixin",
+    "MinecraftServerMixin"
   ],
   "client": [
     "ArmorTrimMixin",
     "HorseArmorFeatureRendererMixin",
     "HorseEntityRendererMixin",
+    "HorseScreenMixin",
     "SmithingScreenMixin"
   ],
   "injectors": {

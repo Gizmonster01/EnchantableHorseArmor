@@ -51,7 +51,8 @@ public class OverhorsedEnchantments {
     }
 
     private static void loadEnchantments() {
-        List<String> enchantmentPool = OverhorsedConfig.getStringList("enchanting.horse-armor-enchantment-pool");
+        List<String> enchantmentPool = OverhorsedConfig.getStringList("enchanting.horse_armor_enchantment_pool");
+        OHLogger.log("Attempting to load enchantments: " + enchantmentPool.size());
         for (String string : enchantmentPool) {
             Enchantment enchantment = Registries.ENCHANTMENT.get(Identifier.tryParse(string));
             if (enchantment == null) {
